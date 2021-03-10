@@ -30,7 +30,7 @@ namespace Assignment_8_Joisah_Sarles
             //Added the services that we need to run the databases
             services.AddDbContext<FamazonDbContext>(options =>
            {
-               options.UseSqlServer(Configuration["ConnectionStrings:FamazonConnection"]);
+               options.UseSqlite(Configuration["ConnectionStrings:FamazonConnection"]);
            });
             // Heres the second service added
             services.AddScoped<IFamazonRepo, EFFamazonRepo>();
