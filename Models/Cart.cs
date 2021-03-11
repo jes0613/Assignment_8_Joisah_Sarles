@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_8_Joisah_Sarles.Models
 {
+    //The good ole' cart class
     public class Cart
     {
         public List<CartLine> Lines { get; set; } = new List<CartLine>();

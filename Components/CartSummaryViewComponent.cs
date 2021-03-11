@@ -7,6 +7,8 @@ using Assignment_8_Joisah_Sarles.Models;
 
 namespace Assignment_8_Joisah_Sarles.Components
 {
+
+    //The View Component for the cart summary
     public class CartSummaryViewComponent : ViewComponent
     {
         private Cart cart;

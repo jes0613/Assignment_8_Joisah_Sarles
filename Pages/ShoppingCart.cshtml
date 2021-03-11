@@ -7,6 +7,10 @@
     ViewData["Assignment"] = "Assignment_8_Joisah_Sarles";
 }
 
+
+@* Shoppiong cart View, puts it in a nice table format
+    You can also remove the items, and continue shopping with the button
+    *@
 <div class="container">
     <div class="row">
         <h2>
@@ -42,6 +46,8 @@
                         @((@line.Quantity * @line.Book.price).ToString("c"))
                     </td>
                     <td>
+
+                        @* Remove button *@
                         <form asp-page-handler="Remove" method="post">
                             <input type="hidden" name="bookId"
                                    value="@line.Book.bookId" />
@@ -57,6 +63,7 @@
             </tbody>
             <tfoot>
                 <tr>
+                    @* Calculates the toatl and displays it *@
                     <td colspan="3" class="text-right">
                         Total:
                     </td>

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Assignment_8_Joisah_Sarles.Pages
 {
+
+    //Page model for Shopping cart, used throughout the session, can add a cart item or remove one. 
     public class ShoppingCartModel : PageModel
     {
         private IFamazonRepo _repo;

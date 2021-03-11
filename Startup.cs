@@ -38,6 +38,7 @@ namespace Assignment_8_Joisah_Sarles
             // Heres the second service added
             services.AddScoped<IFamazonRepo, EFFamazonRepo>();
 
+            //Added all of these services to be able to do the cart and use sessions
             services.AddRazorPages();
 
             services.AddDistributedMemoryCache();
@@ -63,6 +64,7 @@ namespace Assignment_8_Joisah_Sarles
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //added this .UseSession() to use sessions
             app.UseSession();
 
             app.UseRouting();
@@ -75,29 +77,28 @@ namespace Assignment_8_Joisah_Sarles
                 //Add endpoints for all possiblities of what is put into the route
                 endpoints.MapControllerRoute(
                     "catpage",
-                    "{category}/{pageNum:int}",
+                    "{category}/Page{pageNum:int}",
                     new { Controller = "Home", action = "Index" }
                     );
 
                 endpoints.MapControllerRoute(
                     "page",
-                    "Home/{pageNum:int}",
-                    new { Controller = "Home", action = "Index" }
+                    "Page{pageNum:int}",
+                    new { Controller = "Home", action = "Index", pageNum = 1}
                     );
 
                 endpoints.MapControllerRoute(
                     "category",
                     "{category}",
-                    new { Controller = "Home", action = "Index", page = 1 }
+                    new { Controller = "Home", action = "Index", pageNum = 1 }
                     );
 
                 // Changed the route so that it shows as /Books/P1, /P2, /P3... and so on
                 endpoints.MapControllerRoute(
                     "pagination",
-                    "books/P{pageNum}",
-                    new { Controller = "Home", action = "Index" }
+                    "books/Page{pageNum}",
+                    new { Controller = "Home", action = "Index", pageNum = 1}
                     );
-
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });

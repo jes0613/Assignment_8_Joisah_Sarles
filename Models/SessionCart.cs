@@ -6,6 +6,9 @@ using Assignment_8_Joisah_Sarles.Infrastructure;
 
 namespace Assignment_8_Joisah_Sarles.Models
 {
+
+    //Session Cart to allow for the cart widget, inherits from the cart 
+    // class so we can override the Cart class functions
     public class SessionCart : Cart
     {
         public static Cart GetCart(IServiceProvider services)
