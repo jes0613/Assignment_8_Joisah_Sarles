@@ -25,7 +25,7 @@ namespace Assignment_8_Joisah_Sarles.Controllers
         }
 
         // sends the _repo.books to the view to be used to print on the index page
-        public IActionResult Index(string category, int page = 1)
+        public IActionResult Index(string category, int pageNum = 1)
         {
 
             //UPdate the new to include category filtering adn uppdates the page numbering depending on how many pages there actually are. 
@@ -34,12 +34,12 @@ namespace Assignment_8_Joisah_Sarles.Controllers
                 Books = _repo.books
                     .Where(p => category == null || p.category == category)
                     .OrderBy(p => p.bookId)
-                    .Skip((page - 1) * PageSize)
+                    .Skip((pageNum - 1) * PageSize)
                     .Take(PageSize)
                     ,
                 PagingInfo = new PagingInfo
                 {
-                    CurrentPage = page,
+                    CurrentPage = pageNum,
                     ItemsPerPage = PageSize,
                     TotalNumItems = category == null ? _repo.books.Count() :
                         _repo.books.Where (x => x.category == category).Count()

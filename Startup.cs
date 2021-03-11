@@ -1,6 +1,7 @@
 using Assignment_8_Joisah_Sarles.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,10 +31,20 @@ namespace Assignment_8_Joisah_Sarles
             //Added the services that we need to run the databases
             services.AddDbContext<FamazonDbContext>(options =>
            {
+
+               //Converted to SQLite Database
                options.UseSqlite(Configuration["ConnectionStrings:FamazonConnection"]);
            });
             // Heres the second service added
             services.AddScoped<IFamazonRepo, EFFamazonRepo>();
+
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +63,8 @@ namespace Assignment_8_Joisah_Sarles
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -62,13 +75,13 @@ namespace Assignment_8_Joisah_Sarles
                 //Add endpoints for all possiblities of what is put into the route
                 endpoints.MapControllerRoute(
                     "catpage",
-                    "{category}/{page:int}",
+                    "{category}/{pageNum:int}",
                     new { Controller = "Home", action = "Index" }
                     );
 
                 endpoints.MapControllerRoute(
                     "page",
-                    "Home/{page:int}",
+                    "Home/{pageNum:int}",
                     new { Controller = "Home", action = "Index" }
                     );
 
@@ -81,11 +94,12 @@ namespace Assignment_8_Joisah_Sarles
                 // Changed the route so that it shows as /Books/P1, /P2, /P3... and so on
                 endpoints.MapControllerRoute(
                     "pagination",
-                    "books/P{page}",
+                    "books/P{pageNum}",
                     new { Controller = "Home", action = "Index" }
                     );
 
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
             });
 
             SeedData.EnsurePopulated(app);
